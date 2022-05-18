@@ -12,16 +12,18 @@ data = [] #csv資料讀取至此
 
 def main():
     data = []
+    #傳入json array檔案，經由load後每個元素為dict tpye
     with open('yuri.json') as f:
         data = json.load(f)
     
     connection = connect()
 
+    drop_table(connection.cursor(), TABLES)
+    create_table(connection.cursor(), TABLES)
+
+    print(check_table(connection.cursor(), 'comic'))
     for d in data:
-        print("title: {} author: {}".format(d["title"], d["author"]))
-        print("introduction type: {}".format(type(d["introduction"])))
-        print("introduction data: {}".format(len(d["introduction"])))
-        print("yuri status: {}".format(d["yuri status"]))
+        print_debug_data(d)
 
         sql_insert = "INSERT INTO `comic`(`name`, `author`, `yuri status`) \
             VALUES(%s, %s, %s)"
