@@ -5,8 +5,7 @@ import string
 import requests
 import re
 from bs4 import BeautifulSoup
-#from datetime import datetime
-#import html5lib
+from config import *
 
 
 temp_slice = slice(5, 6)
@@ -82,12 +81,12 @@ def handle_yuri(url):
         temp_yuri_raw_data.append(temp_comic.copy())
         print(temp_yuri_raw_data)
     
-    temp = open('yuri.json', "w")
+    temp = open('yuri2.json', "w")
     temp.write(json.dumps(temp_yuri_raw_data, ensure_ascii=False))
     temp.close()
 
 
-
+handle_yuri(YURI_URL)
 
 
 # lucky = data[M-1]
