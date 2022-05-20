@@ -13,11 +13,11 @@ data = [] #csv資料讀取至此
 def main():
     data = []
     #傳入json array檔案，經由load後每個元素為dict tpye
-    with open('yuri.json') as f:
+    with open('yuri_raw_plus.json') as f:
         data = json.load(f)
     
     connection = connect()
-
+    
     drop_table(connection.cursor(), TABLES)
     create_table(connection.cursor(), TABLES)
 
