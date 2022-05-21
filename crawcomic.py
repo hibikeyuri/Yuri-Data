@@ -13,6 +13,7 @@ data = [] #csv資料讀取至此
 genre = set()
 author = []
 
+#throw Yuri to table
 def main():
     data = []
     #傳入json array檔案，經由load後每個元素為dict tpye
@@ -47,23 +48,21 @@ def handle_data():
 
     date_rex = re.compile(r'(\d\d\d\d/\d(\d)?/\d(\d)?)')
 
-    cnt = 0
     for ind, d in enumerate(data[:]):
         #print_debug_data(d)
 
         #json中的introduction欄位處理
-        #擷取發售日
-        #擷取出版社
-        #擷取揭載誌
-        #擷取label
-        exp = d["introduction"][1]
+        publishinfo = d["introduction"][1]
+
+        print('-----{}-----'.format(ind + 1))
+
         # 発売日
-        date_search = date_rex.search(exp)
-        if date_search:
-            cnt += 1
-            #print(date_search.group())
-            #print(cnt)
+        date_search = 0
+        if date_rex.search(publishinfo):
+            data_search = date_rex.search(publishinfo)
+            print(data_search.groups())
         else:
+            #for special case, need to revise
             for intro in d["introduction"]:
                 if intro.startswith('発売日'):
                     data_search = date_rex.search(intro)
@@ -74,19 +73,16 @@ def handle_data():
         publisher_rex2 = re.compile(r'(出版：)(\t)?(\w+)(\n)?')
         publisher_rex3 = re.compile(r'(出版社\(旧版\)：)(\t)?(\w+)(\n)?')
 
-        publisher_search = publisher_rex.search(exp)
-        
-        if publisher_search:
-            #print(publisher_search.groups())
-            pass
-        elif publisher_rex2.search(exp):
-            temp = publisher_rex2.search(exp)
-            #print(d["title"])
-            #print(temp.groups())
-        elif publisher_rex3.search(exp):
-            temp = publisher_rex3.search(exp)
-            #print(d["title"])
-            #print(temp.groups())
+        publisher_search  = 0
+        if publisher_rex.search(publishinfo):
+            publisher_search = publisher_rex.search(publishinfo)
+            print(publisher_search.groups())
+        elif publisher_rex2.search(publishinfo):
+            publisher_search = publisher_rex2.search(publishinfo)
+            print(publisher_search.groups())
+        elif publisher_rex3.search(publishinfo):
+            publisher_search = publisher_rex3.search(publishinfo)
+            print(publisher_search.groups())
             different_publisher_data.append(d)
         else:
             #print(d["title"])
@@ -97,51 +93,39 @@ def handle_data():
                     #print(find.groups())
                     pass
         
-        # 掲載誌
+        # 掲載誌/発表
         publish_magzine_rex = re.compile(r'掲載誌：(\w+)(\n)?')
         publish_magzine_rex2 = re.compile(r'発表：(\w+)(\n)?')
 
-        publish_magzine_search = publish_magzine_rex.search(exp)
-        
-        if publish_magzine_search:
-            pass
-            #print(publish_magzine_search.groups())
-        elif publish_magzine_rex2.search(exp):
-            temp = publish_magzine_rex2.search(exp)
-            #print(temp.groups())
+        publish_magzine_search = 0 
+        if publish_magzine_rex.search(publishinfo):
+            publish_magzine_search = publish_magzine_rex.search(publishinfo)
+            print(publish_magzine_search.groups())
+        elif publish_magzine_rex2.search(publishinfo):
+            publish_magzine_search = publish_magzine_rex2.search(publishinfo)
+            print(publish_magzine_search.groups())            
         else:
-            #print(d["title"])
             pass
 
         # レーベル
         label_rex = re.compile(r'レーベル：(\w+)(\n)?')
         label_rex2 = re.compile(r'レーベル(旧版)：(\w+)(\n)?')
 
-        publish_label_search = label_rex.search(exp)
-        if publish_label_search:
-            pass
-            #print(publish_label_search.groups())
-        elif label_rex2.search(exp):
-            temp = label_rex2.search(exp)
-            #print(temp.groups())
+        publish_label_search = 0
+        if label_rex.search(publishinfo):
+            publish_label_search = label_rex.search(publishinfo)
+            print(publish_label_search.groups())
+        elif label_rex2.search(publishinfo):
+            publish_label_search = label_rex2.search(publishinfo)
+            print(publish_label_search.groups())
         else:
-            #print(d["title"])
             pass
-
-def check_special_case():
-    with open('yuri_raw_plus.json') as f:
-        data = json.load(f)
-    
-    for d in data:
-        if len(d["introduction"]) > 3:
-            print(d["title"])
-
+        
 
 if __name__ == '__main__':
     #main()
-    #handle_data()
-    check_special_case()
-    
+    handle_data()
+
 # 出版
 # 出版社(旧版)
 # (新装版)
