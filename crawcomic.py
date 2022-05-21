@@ -1,7 +1,5 @@
 from datetime import datetime, timezone, timedelta
 import json
-from multiprocessing import connection
-from operator import iconcat
 import re
 import os.path
 import pymysql.cursors
@@ -40,8 +38,10 @@ def main():
     connection.close()
 
 def handle_data():
+    #紀錄可能會有出版社和單行本類型新舊版差異的作品
     different_publisher_data = []
     different_label = []
+    special_case = []
 
     with open('yuri_raw_plus.json') as f:
         data = json.load(f)
@@ -58,15 +58,13 @@ def handle_data():
 
         # 発売日
         date_search = 0
+        date = 0
         if date_rex.search(publishinfo):
-            data_search = date_rex.search(publishinfo)
-            print(data_search.groups())
+            date_search = date_rex.search(publishinfo)
+            date = date_search.groups()[0]
+            #print(date_search.groups())
         else:
-            #for special case, need to revise
-            for intro in d["introduction"]:
-                if intro.startswith('発売日'):
-                    data_search = date_rex.search(intro)
-                    #print(data_search.group())
+            pass
         
         # 出版社
         publisher_rex = re.compile(r'(出版社：)(\t)?(\w+)(\n)?')
@@ -74,60 +72,89 @@ def handle_data():
         publisher_rex3 = re.compile(r'(出版社\(旧版\)：)(\t)?(\w+)(\n)?')
 
         publisher_search  = 0
+        publisher = 0
         if publisher_rex.search(publishinfo):
             publisher_search = publisher_rex.search(publishinfo)
-            print(publisher_search.groups())
+            publisher = publisher_search.groups()[2]
+            #print(publisher_search.groups())
         elif publisher_rex2.search(publishinfo):
             publisher_search = publisher_rex2.search(publishinfo)
-            print(publisher_search.groups())
+            publisher = publisher_search.groups()[2]
+            #print(publisher_search.groups())
         elif publisher_rex3.search(publishinfo):
             publisher_search = publisher_rex3.search(publishinfo)
-            print(publisher_search.groups())
-            different_publisher_data.append(d)
+            publisher = publisher_search.groups()[2]
+            #print(publisher_search.groups())
+            different_publisher_data.append(d["title"])
         else:
-            #print(d["title"])
-            #print(d["introduction"])
-            for intro in d["introduction"]:
-                find = publisher_rex.search(intro)
-                if find:
-                    #print(find.groups())
-                    pass
+            pass
         
         # 掲載誌/発表
         publish_magzine_rex = re.compile(r'掲載誌：(\w+)(\n)?')
         publish_magzine_rex2 = re.compile(r'発表：(\w+)(\n)?')
 
         publish_magzine_search = 0 
+        publish_magzine = 0
         if publish_magzine_rex.search(publishinfo):
             publish_magzine_search = publish_magzine_rex.search(publishinfo)
-            print(publish_magzine_search.groups())
+            publish_magzine = publish_magzine_search.groups()[0]
+            #print(publish_magzine_search.groups())
         elif publish_magzine_rex2.search(publishinfo):
             publish_magzine_search = publish_magzine_rex2.search(publishinfo)
-            print(publish_magzine_search.groups())            
+            publish_magzine = publish_magzine_search.groups()[0]
+            #print(publish_magzine_search.groups())            
         else:
             pass
 
         # レーベル
         label_rex = re.compile(r'レーベル：(\w+)(\n)?')
-        label_rex2 = re.compile(r'レーベル(旧版)：(\w+)(\n)?')
+        label_rex2 = re.compile(r'レーベル\(旧版\)：(\w+)(\n)?')
 
         publish_label_search = 0
+        publish_label = 0
         if label_rex.search(publishinfo):
             publish_label_search = label_rex.search(publishinfo)
-            print(publish_label_search.groups())
+            publish_label = publish_label_search.groups()[0]
+            #print(publish_label_search.groups())
         elif label_rex2.search(publishinfo):
             publish_label_search = label_rex2.search(publishinfo)
-            print(publish_label_search.groups())
+            publish_label = publish_label_search.groups()[0]
+            different_label.append(d["title"])
+            #print(publish_label_search.groups())
         else:
             pass
         
+        #特判其他作品
+        if len(d["introduction"]) > 3:
+            special_case.append(d)
+            #for special case
+            for intro in d["introduction"]:
+                if intro.startswith('発売日'):
+                    date = date_rex.search(intro).groups()[0]
+
+                if publisher_rex.search(intro):
+                    publisher = publisher_rex.search(intro).groups()[2]
+                
+                if publish_magzine_rex.search(intro):
+                    publish_magzine = publish_magzine_rex.search(intro).groups()[0]
+                
+                if label_rex.search(intro):
+                    publish_label = label_rex.search(intro).groups()[0]
+
+
+        #漫畫或小說
+        carrier_rex = re.compile(r'【小説】')
+        carrier = 0
+        if carrier_rex.search(d["title"]):
+            carrier = "小説"
+        else:
+            carrier = "漫画"
+        print('{}, {}, {}, {}, {}, {}'.format(d["title"], date, publisher, publish_magzine, publish_label, carrier))
+    print(different_publisher_data)
+    print(different_label)
+    for ele in special_case:
+        print(ele["title"])
 
 if __name__ == '__main__':
     #main()
     handle_data()
-
-# 出版
-# 出版社(旧版)
-# (新装版)
-# レーベル(旧版)
-# (新装版)
