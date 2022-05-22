@@ -22,7 +22,6 @@ def main():
     
     drop_create_tables(connection.cursor(), TABLES)
 
-    #print(check_table(connection.cursor(), 'Yuri'))
     for d in data:
         print_debug_data(d)
 
@@ -43,8 +42,8 @@ def handle_data():
     different_label = []
     special_case = []
 
-    # connection = connect()    
-    # drop_create_tables(connection.cursor(), TABLES)
+    connection = connect()    
+    drop_create_tables(connection.cursor(), TABLES)
 
     with open('yuri_raw_plus.json') as f:
         data = json.load(f)
@@ -61,7 +60,7 @@ def handle_data():
 
         # 発売日
         date_search = 0
-        date = 0
+        date = None
         if date_rex.search(publishinfo):
             date_search = date_rex.search(publishinfo)
             date = date_search.groups()[0]
@@ -75,7 +74,7 @@ def handle_data():
         publisher_rex3 = re.compile(r'(出版社\(旧版\)：)(\t)?(\w+)(\n)?')
 
         publisher_search  = 0
-        publisher = 0
+        publisher = None
         if publisher_rex.search(publishinfo):
             publisher_search = publisher_rex.search(publishinfo)
             publisher = publisher_search.groups()[2]
@@ -97,7 +96,7 @@ def handle_data():
         publish_magzine_rex2 = re.compile(r'発表：(\w+)(\n)?')
 
         publish_magzine_search = 0 
-        publish_magzine = 0
+        publish_magzine = None
         if publish_magzine_rex.search(publishinfo):
             publish_magzine_search = publish_magzine_rex.search(publishinfo)
             publish_magzine = publish_magzine_search.groups()[0]
@@ -114,7 +113,7 @@ def handle_data():
         label_rex2 = re.compile(r'レーベル\(旧版\)：(\w+)(\n)?')
 
         publish_label_search = 0
-        publish_label = 0
+        publish_label = None
         if label_rex.search(publishinfo):
             publish_label_search = label_rex.search(publishinfo)
             publish_label = publish_label_search.groups()[0]
@@ -170,27 +169,58 @@ def handle_data():
             author = author[0]
         else:
             author = author[1].split(" / ")
+        
+        #yuri status
+        yuri_status = 0
+        if d["author"] == "	✔ 百合承認済み" and d["yuri status"] == "Amazon":
+            yuri_status = "	✔ 百合承認済み"
+        elif d["yuri status"] == "Amazon":
+            yuri_status = None
+        else:
+            yuri_status = d["yuri status"]
 
-        print(author)
+
         #print('{}, {}, {}, {}, {}, {}, {}, "エロ":{}, author:{}'.format(d["title"], date, publisher, publish_magzine, publish_label, carrier, yuri_status, ero, author))
 
-        sql_insert = "INSERT INTO `Yuri`(`name`, `author`, `yuri_status`, `carrier`, `ero`) \
-            VALUES(%s, %s, %s, %s, %s)"
+        #丟資料到Yuri資料庫        
+        with connection.cursor() as cursor:
+            cursor.execute(sql_insert, \
+                (d["title"], d["author"], yuri_status, date, \
+                publisher, publish_magzine, publish_label, d["introduction"][0], d["comic page"], \
+                d["small cover"], d["main cover"], carrier, ero))
+
+            print("INSERT {} OK!".format(TABLE_YURI))
         
-        # with connection.cursor() as cursor:
-        #     cursor.execute(sql_insert, (d["title"], d["author"], d["yuri status"], carrier, ero))
-        #     print("INSERT OK!")
-    
-        # connection.commit()
+        connection.commit()
 
-    # connection.close()
+        # #丟資料到Tankoubon     
+        with connection.cursor() as cursor:
+            for page_url, img_url in zip(d["tankoubons"], d["tankoubons urls"]):
+                cursor.execute(sql_insert_tankoubon, (page_url, img_url, ind + 1))
 
+            print("INSERT {} OK!".format(TABLE_TANKOUBON))
+        
+        connection.commit()
 
+        # #丟資料到BuyUrl
+        sql_insert_buyurl = "INSERT INTO `BuyUrl`(`buy_url`, `YID`) \
+            VALUES(%s, %s)"
+
+        with connection.cursor() as cursor:
+            for buy_url in d["buy urls"]:
+                cursor.execute(sql_insert_buyurl, (buy_url, ind + 1))
+            
+            print("INSERT {} OK!".format(TABLE_BUYURL))
+        
+        connection.commit()
+
+    connection.close()
+
+    #將特例記錄起來
     print(different_publisher_data)
     print(different_label)
     for ele in special_case:
         print(ele["title"])
 
 if __name__ == '__main__':
-    #main()
     handle_data()
