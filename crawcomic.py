@@ -43,6 +43,9 @@ def handle_data():
     different_label = []
     special_case = []
 
+    # connection = connect()    
+    # drop_create_tables(connection.cursor(), TABLES)
+
     with open('yuri_raw_plus.json') as f:
         data = json.load(f)
 
@@ -149,7 +152,40 @@ def handle_data():
             carrier = "小説"
         else:
             carrier = "漫画"
-        print('{}, {}, {}, {}, {}, {}'.format(d["title"], date, publisher, publish_magzine, publish_label, carrier))
+
+        #yuri status revised
+        yuri_status = d["yuri status"]
+        if not(( "✔ 百合承認済み" in d["yuri status"]) or ("✔ 百合公認" in d["yuri status"])):
+            yuri_status = None
+
+        #R18作品確認
+        ero = 0
+        if ("エロ" in d["genre"]) or ("成人向け" in d["genre"]):
+            ero = 1
+        
+        #作者
+        author = d["author"]
+        author = author.split("著・")
+        if author[0] != "":
+            author = author[0]
+        else:
+            author = author[1].split(" / ")
+
+        print(author)
+        #print('{}, {}, {}, {}, {}, {}, {}, "エロ":{}, author:{}'.format(d["title"], date, publisher, publish_magzine, publish_label, carrier, yuri_status, ero, author))
+
+        sql_insert = "INSERT INTO `Yuri`(`name`, `author`, `yuri_status`, `carrier`, `ero`) \
+            VALUES(%s, %s, %s, %s, %s)"
+        
+        # with connection.cursor() as cursor:
+        #     cursor.execute(sql_insert, (d["title"], d["author"], d["yuri status"], carrier, ero))
+        #     print("INSERT OK!")
+    
+        # connection.commit()
+
+    # connection.close()
+
+
     print(different_publisher_data)
     print(different_label)
     for ele in special_case:
