@@ -9,7 +9,7 @@ def main():
     data = []
     errors = []
 
-    with open('yuri_raw_plus.json') as f:
+    with open(FILENAME) as f:
         data = json.load(f)
     
     connection = connect()
