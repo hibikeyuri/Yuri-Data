@@ -10,9 +10,9 @@ def main():
     sql = "INSERT INTO {}(`name`) VALUES(%s)"
     sql = sql.format(TABLE_AUTHOR)
     with connection.cursor() as cursor:
-        for gen in AUTHOR:
-            cursor.execute(sql, (gen))
-            print("{} INSET complete!".format(gen))
+        for aut in AUTHOR:
+            cursor.execute(sql, (aut))
+            print("{} INSET complete!".format(aut))
             
         connection.commit()
 
