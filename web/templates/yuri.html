@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>MLTD</title>
+    <link rel="stylesheet" href="{[ url_for('static', filename='css/yuri.css') ]}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="{[ url_for('static', filename='js/yuri.js') ]}"></script>
+</head>
+
+<body>
+    <div id="app">
+        <!-- filter function -->
+        <h3>百合作品</h3>
+        <div class="cond">
+            <b>篩選</b><br />
+            <label><input type="checkbox" v-model="filters.author" /> 作者</label>
+            <select>
+                <option>test1</option>
+            </select><br />
+            <label><input type="checkbox" v-model="filters.publisher"> 出版社</label>
+            <select>
+                <option>test2</option>
+            </select><br />
+            <label><input type="checkbox" v-model="filters.chkr18"> R18</label>
+            <select>
+                <option>test3</option>
+            </select><br />
+        </div>
+
+        <table id="yuris">
+            <tr>
+                <th v-for="info in yuriinfo">
+                <a href="#" v-on:click="" v-bind:class="">{{ info.text }}</a>
+                </th>
+            </tr>
+            <tr v-for="yuri in yuris">
+                <td></td>
+                <td v-if="yuri.name">{{ yuri.name }}</td>
+                <td v-else>不明</td>
+                <td v-if="yuri.author">{{ yuri.author }}</td>
+                <td v-else>不明</td>
+                <td v-if="yuri.publisher">{{ yuri.publisher }}</td>
+                <td v-else>不明</td>
+                <td v-if="yuri.carrier">{{ yuri.carrier }}</td>
+                <td v-else>不明</td>
+                <td>{{ yuri.ero }}</td>
+            </tr>
+        </table>
+    </div>
+    <script type="application/json" id="yuris_json">{[yuris|safe]}</script>
+</body>
+
+</html>

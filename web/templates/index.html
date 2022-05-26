@@ -6,17 +6,7 @@
 <body>
     <div id="app">
         {{ message }}
-        {{ name }} is very good!
     </div>
+    <script src="{[ url_for('static', filename='js/test.js') ]}"></script>
 </body>
-    <script>
-        const vm = new Vue({
-            data: {
-                message: 'Hello Vue!',
-                name: "Tim"
-            }
-        });
-
-        vm.$mount('#app');
-    </script>
 </html>
