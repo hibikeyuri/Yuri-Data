@@ -26,6 +26,9 @@ $(function() {
             ],
         },
         methods: {
+            linkfor: function(id) {
+                return '/yuri/' + id
+            }
         },
         computed: {
         }

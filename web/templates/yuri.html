@@ -37,9 +37,8 @@
                 </th>
             </tr>
             <tr v-for="yuri in yuris">
-                <td></td>
-                <td v-if="yuri.name">{{ yuri.name }}</td>
-                <td v-else>不明</td>
+                <td><img class="yuri_icon" :src="yuri.icon"></td>
+                <td><a v-bind:href="linkfor(yuri.id)">{{ yuri.name }}</a></td>
                 <td v-if="yuri.author">{{ yuri.author }}</td>
                 <td v-else>不明</td>
                 <td v-if="yuri.publisher">{{ yuri.publisher }}</td>

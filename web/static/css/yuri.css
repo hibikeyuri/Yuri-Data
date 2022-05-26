@@ -18,6 +18,10 @@
     padding: 2px 5px;
 }
 
+#yuris img {
+    height: 150px;
+}
+
 a {
     font-weight: normal;
     color: blue;

@@ -28,7 +28,8 @@ def get_yuris():
                 'author': dbs['author'],
                 'publisher': dbs['publisher'],
                 'carrier': dbs['carrier'],
-                'ero': dbs['ero']
+                'ero': dbs['ero'],
+                'icon': dbs['small_img_url']
             })
         connection.close()
 
