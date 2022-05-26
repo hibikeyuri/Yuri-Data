@@ -4,4 +4,4 @@ __pycache__/*
 /*.json
 /*.pyc
 
-web/static/*
+web/static/images/*

@@ -1,0 +1,20 @@
+.flex {
+    display: flex;
+    border: 1px solid black;
+    flex-wrap: wrap;
+}
+
+.flex img {
+    width: 245px;
+}
+
+#info td {
+    text-align: center;
+    border: 1px solid black;
+    padding: 2px 5px;
+}
+
+#info img {
+    border: 1px solid black;
+    height: 300px;
+}

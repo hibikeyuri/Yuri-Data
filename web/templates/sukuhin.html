@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="{[ url_for('static', filename='css/sukuhin.css') ]}">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+<script src="{[ url_for('static', filename='js/sukuhin.js') ]}"></script>
+<title>{[ title ]}</title>
+</head>
+<body>
+<div id="app">
+  <a href="/">←所有百合作品</a>
+  <h3>作品基本資料</h3>
+  <table id="info">
+    <tr><td rowspan="7"><img v-bind:src="info.main_img_url"/></td></tr>
+    <tr><td>名稱</td><td>{{ info.name }}</td></tr>
+    <tr><td>作者</td><td v-for="author in moreinfo.author">{{ author }}</td></tr>
+    <tr><td>種類</td><td v-for="genre in moreinfo.genre">{{ genre }}</td></tr>
+    <tr><td>百合</td><td>{{ info.yuri_status }}</td></tr>
+    <tr><td>載體</td><td>{{ info.carrier }}</td></tr>
+    <tr><td>R18</td><td v-if="info.ero">{{ r18 }}</td><td v-else>{{ nor18 }}</td></tr>
+  </table>
+
+  <h3>Introduction</h3>
+  <div>{{ info.introduction }}</div>
+  <h3>發售資訊</h3>
+  <div>{{ info.publish_time }} {{ info.publisher }} {{ info.publish_magzine }} {{ info.publish_label }}</div>
+
+  <h3>其他單行本</h3>
+  <div class="flex">
+      <img v-for="tan in moreinfo.tankoubon" :src="tan" width=250px/>
+  </div>
+</div>
+<script type="application/json" id="info_json">{[info|safe]}</script>
+<script type="application/json" id="moreinfo_json">{[moreinfo|safe]}</script>
+</body>
+</html> 
