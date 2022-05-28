@@ -3,3 +3,6 @@
 - crawling yuri data from some website
 - using MySQL to store data
 - design some tables for querying some data coveniently
+## To do features in the future
+- authentication
+- registeration system
