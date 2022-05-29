@@ -6,3 +6,4 @@
 ## To do features in the future
 - authentication
 - registeration system
+- cloud system like ELB or cache etc.
