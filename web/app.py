@@ -97,6 +97,10 @@ def test():
     return render_template('index.html')
 
 @app.route("/")
+def home_page():
+    return render_template("homepage.html")
+
+@app.route("/yuri")
 def yuri_home_page():
     yuris = get_yuris()
     return render_template('yuri.html', yuris=dumps(yuris))

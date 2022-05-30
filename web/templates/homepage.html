@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="{[ url_for('static', filename='css/homepage.css') ]}">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+<script src="{[ url_for('static', filename='js/homepage.js') ]}"></script>
+<title>Home Page</title>
+</head>
+<body>
+<div id="app">
+    <p>測試</p>
+    <ol class="nav_area">
+        <li class="button">首頁</li>
+        <li class="button">Yuris</li>
+        <li class="button">Authors</li>
+        <li class="button">Publishers</li>
+        <li class="button">Genres</li>
+    </ol>
+</div>
+<script type="application/json" id="info_json">{[info|safe]}</script>
+<script type="application/json" id="moreinfo_json">{[moreinfo|safe]}</script>
+</body>
+</html>
