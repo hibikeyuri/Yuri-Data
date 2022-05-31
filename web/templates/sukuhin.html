@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" href="{[ url_for('static', filename='css/sukuhin.css') ]}">
+<link rel="stylesheet" href="{[ url_for('static', filename='css/homepage.css') ]}">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
 <script src="{[ url_for('static', filename='js/sukuhin.js') ]}"></script>
@@ -10,6 +11,20 @@
 </head>
 <body>
 <div id="app">
+    <div class="nav_area">
+        <a class="button brand" href="/">ユリデータ</a>
+        <a class="button active" href="/yuris">Yuris</a>
+        <a class="button" href="/authors">Authors</a>
+        <a class="button" href="/publishers">Publishers</a>
+        <a class="button" href="/genres">Genres</a>
+    </div>
+
+    <ul class="breadcrumb">
+        <li><a href="/">Home</a></li>
+        <li><a href="/yuri">Yuris</a></li>
+        <li>{{ info.name }}</li>
+    </ul>
+
   <a href="/">←所有百合作品</a>
   <h3>作品基本資料</h3>
   <table id="info">

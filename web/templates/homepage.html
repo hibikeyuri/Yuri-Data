@@ -10,14 +10,34 @@
 </head>
 <body>
 <div id="app">
-    <p>測試</p>
-    <ol class="nav_area">
-        <li class="button">首頁</li>
-        <li class="button">Yuris</li>
-        <li class="button">Authors</li>
-        <li class="button">Publishers</li>
-        <li class="button">Genres</li>
-    </ol>
+    <div class="nav_area">
+        <a class="button active brand" href="/">ユリデータ</a>
+        <a class="button" href="/yuris">Yuris</a>
+        <a class="button" href="/authors">Authors</a>
+        <a class="button" href="/publishers">Publishers</a>
+        <a class="button" href="/genres">Genres</a>
+    </div>
+
+
+<ul class="breadcrumb">
+    <li>Home</li>
+</ul>
+
+<h2>Introduction</h2>
+
+<p>This website is the collection of yuri sukuhins, it collects comics and novels<br/>
+about yuri.
+</p>
+
+<h2>Main page</h2>
+
+<ui>
+    <li><a href="/">Home</a></li>
+    <li><a href="/yuri">Yuris</a></li>
+    <li><a href="/author">Authors</a></li>
+    <li><a href="/publisher">Publishers</a></li>
+    <li><a href="/genre">Genres</a></li>
+</ui>
 </div>
 <script type="application/json" id="info_json">{[info|safe]}</script>
 <script type="application/json" id="moreinfo_json">{[moreinfo|safe]}</script>

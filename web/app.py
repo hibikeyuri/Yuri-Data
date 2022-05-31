@@ -100,12 +100,12 @@ def test():
 def home_page():
     return render_template("homepage.html")
 
-@app.route("/yuri")
+@app.route("/yuris")
 def yuri_home_page():
     yuris = get_yuris()
     return render_template('yuri.html', yuris=dumps(yuris))
 
-@app.route("/yuri/<int:id>")
+@app.route("/yuris/<int:id>")
 def yuri_page(id):
     try:
         info, moreinfo = get_yuri_info(id)
