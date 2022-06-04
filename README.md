@@ -6,6 +6,7 @@
 ## To do features in the future
 - pagination
 - filter function
+- third party log in
 - authentication
 - registeration system
 - cloud system like ELB or cache etc.
