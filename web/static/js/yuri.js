@@ -83,9 +83,6 @@ $(function() {
 //         }
 //         maxRight = pages
 //     }
-    
-    
-
 //     for (var page = maxLeft; page <= maxRight; page++) {
 //     	wrapper.innerHTML += `<button value=${page} class="page btn btn-sm btn-info">${page}</button>`
 //     }
@@ -128,3 +125,7 @@ $(function() {
 
 //     pageButtons(data.pages)
 // }
+
+function clear() {
+    return 0;
+}
