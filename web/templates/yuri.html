@@ -45,7 +45,7 @@
         </div>
 
         <table id="yuris">
-            <tr>
+            <!-- <tr>
                 <th v-for="info in yuriinfo">
                 <a href="#" v-on:click="" v-bind:class="">{{ info.text }}</a>
                 </th>
@@ -60,19 +60,22 @@
                 <td v-if="yuri.carrier">{{ yuri.carrier }}</td>
                 <td v-else>不明</td>
                 <td>{{ yuri.ero }}</td>
-            </tr>
+            </tr> -->
+            <thead>
+                <tr>
+                    <th v-for="info in yuriinfo">
+                    <a href="#" v-on:click="" v-bind:class="">{{ info.text }}</a>
+                    </th>
+                </tr>
+            </thead>
+            <tbody id="table-body">
+                
+            </tbody>
         </table>
-        
-        <div class="pagination">
-            <a href="#">&laquo;</a>
-            <a href="#">1</a>
-            <a class="active" href="#">2</a>
-            <a href="#">3</a>
-            <a href="#">4</a>
-            <a href="#">5</a>
-            <a href="#">&raquo;</a>
-        </div>
 
+        <div id="pagination-wrapper" class="pagination">
+        </div>
+    
     </div>
     <script type="application/json" id="yuris_json">{[yuris|safe]}</script>
 </body>
