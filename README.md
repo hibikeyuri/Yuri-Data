@@ -7,6 +7,7 @@
 - pagination
 - filter function
 - third party log in
+- some async application
 - authentication
 - registeration system
 - cloud system like ELB or cache etc.
