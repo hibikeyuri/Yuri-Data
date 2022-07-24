@@ -92,6 +92,23 @@ def get_yuri_info(id):
 
         return info, moreinfo         
 
+def get_authors():
+    connection = connect()
+    with connection.cursor() as cursor:
+        sql_select_from_author= 'SELECT * FROM {}'.format(TABLE_AUTHOR)
+        cursor.execute(sql_select_from_author)
+
+        datas = cursor.fetchall()
+        res = []
+        for dbs in datas:
+            res.append({
+                'id': dbs['id'],
+                'name': dbs['name']
+            })
+        connection.close()
+
+        return res
+
 @app.route("/test")
 def test():
     return render_template('index.html')
@@ -112,6 +129,11 @@ def yuri_page(id):
     except KeyError as err:
         abort(404)
     return render_template('sukuhin.html', title = info['name'], info=dumps(info), moreinfo=dumps(moreinfo))
+
+@app.route("/authors")
+def author_page():
+    authors = get_authors()
+    return render_template('author.html', authors=dumps(authors))
 
 @app.errorhandler(404)
 def page_not_found(error):

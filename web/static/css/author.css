@@ -1,0 +1,21 @@
+#authors {
+    clear: both;
+    text-align: left;
+    border-collapse: collapse;
+
+    width: 100%;
+}
+
+#authors th {
+    text-align: center;
+}
+
+#authors td {
+    border: 1px solid black;
+    padding: 2px 5px;
+}
+
+a {
+    font-weight: normal;
+    color: blue;
+}
