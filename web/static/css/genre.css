@@ -1,0 +1,19 @@
+#genres {
+    clear: both;
+    width: auto;
+    border-collapse: collapse;
+    text-align: center;
+  }
+
+  #genres th {
+    padding: 2px 10px;
+  }
+
+  #genres td {
+    padding: 2px 10px;
+  }
+
+  #genres a {
+    text-decoration: none;
+    color: black;
+  }

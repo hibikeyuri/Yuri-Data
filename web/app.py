@@ -156,8 +156,7 @@ def author_page():
 @app.route("/genres")
 def genre_page():
     genres = get_genres()
-    print(genres)
-    return render_template('genre.html', authors=dumps(genres))
+    return render_template('genre.html', genres=dumps(genres))
 
 @app.errorhandler(404)
 def page_not_found(error):

@@ -1,4 +1,5 @@
 $(function() {
+    console.log("OK")
     var genres_info = JSON.parse($('#genres_json').text());
  
     var app = new Vue({
