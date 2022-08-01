@@ -109,6 +109,24 @@ def get_authors():
 
         return res
 
+def get_genres():
+    connection = connect()
+    with connection.cursor() as cursor:
+        sql_select_from_genre= 'SELECT * FROM {}'.format(TABLE_GENRE)
+        cursor.execute(sql_select_from_genre)
+
+        datas = cursor.fetchall()
+        res = []
+        for dbs in datas:
+            res.append({
+                'id': dbs['id'],
+                'name': dbs['name']
+            })
+        connection.close()
+
+        return res
+
+
 @app.route("/test")
 def test():
     return render_template('index.html')
@@ -134,6 +152,12 @@ def yuri_page(id):
 def author_page():
     authors = get_authors()
     return render_template('author.html', authors=dumps(authors))
+
+@app.route("/genres")
+def genre_page():
+    genres = get_genres()
+    print(genres)
+    return render_template('genre.html', authors=dumps(genres))
 
 @app.errorhandler(404)
 def page_not_found(error):

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Yuri Data</title>
+    <link rel="stylesheet" href="{[ url_for('static', filename='css/author.css') ]}">
+    <link rel="stylesheet" href="{[ url_for('static', filename='css/homepage.css') ]}">    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="{[ url_for('static', filename='js/genre.js') ]}"></script>
+</head>
+
+<body>
+    <div id="app">
+        <div class="nav_area">
+            <a class="button brand" href="/">ユリデータ</a>
+            <a class="button active" href="/yuris">Yuris</a>
+            <a class="button" href="/authors">Authors</a>
+            <a class="button" href="/publishers">Publishers</a>
+            <a class="button" href="/genres">Genres</a>
+        </div>
+
+        <ul class="breadcrumb">
+            <li><a href="/">Home</a></li>
+            <li>Genres</li>
+        </ul>
+    
+        <table id="genres">
+            <thead>
+                <tr>
+                    <th v-for="info in genreinfo">
+                    <a href="#" v-on:click="" v-bind:class="">{{ info.text }}</a>
+                    </th>
+                </tr>
+            </thead>
+            <tbody id="table-body">
+                
+            </tbody>
+        </table>
+
+        <div id="pagination-wrapper" class="pagination">
+        </div>
+    
+    </div>
+    <script type="application/json" id="genres_json">{[genres|safe]}</script>
+</body>
+
+</html>
