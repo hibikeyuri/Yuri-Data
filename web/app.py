@@ -126,6 +126,28 @@ def get_genres():
 
         return res
 
+def get_publishers():
+    connection = connect()
+    with connection.cursor() as cursor:
+        sql_select_from_yuri= 'SELECT `publisher` FROM {}'.format(TABLE_YURI)
+        cursor.execute(sql_select_from_yuri)
+
+        datas = cursor.fetchall()
+        count = 0
+        res = []
+        publishers = dict()
+
+        for dbs in datas:
+            if dbs['publisher'] not in publishers.values():
+                count += 1
+                publishers.update({count : dbs['publisher']})
+                res.append({
+                    'id' : count,
+                    'name': dbs['publisher']
+                })
+                
+        connection.close()
+        return res
 
 @app.route("/test")
 def test():
@@ -157,6 +179,11 @@ def author_page():
 def genre_page():
     genres = get_genres()
     return render_template('genre.html', genres=dumps(genres))
+
+@app.route("/publishers")
+def publisher_page():
+    publishers = get_publishers()
+    return render_template('publisher.html', publishers=dumps(publishers))
 
 @app.errorhandler(404)
 def page_not_found(error):
