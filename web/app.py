@@ -1,10 +1,10 @@
+import os, sys
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 from flask import Flask
 from flask import render_template, request, url_for, abort
 from flask.json import dumps
-import pymysql.cursors
-from datetime import datetime
-import os, sys
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 from config import *
 
 

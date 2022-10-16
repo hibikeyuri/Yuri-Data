@@ -1,10 +1,7 @@
-from datetime import datetime, timezone, timedelta
 import json
 import re
-import os.path
-import pymysql.cursors
+
 from config import *
-import pprint
 
 
 data = [] #csv資料讀取至此

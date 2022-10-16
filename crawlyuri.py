@@ -1,13 +1,13 @@
 import json
-import string
 import random
 import time
-from turtle import delay
 import requests
 import re
-from bs4 import BeautifulSoup
-from config import *
 from pprint import *
+
+from bs4 import BeautifulSoup
+
+from config import *
 
 
 temp_slice = slice(5, 6)
