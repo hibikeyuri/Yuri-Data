@@ -3,6 +3,10 @@
     width: auto;
     border-collapse: collapse;
     text-align: center;
+
+    width: 95%;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   #genres th {
@@ -10,10 +14,16 @@
   }
 
   #genres td {
-    padding: 2px 10px;
+    border-bottom: 1px solid rgb(0, 0, 0, 0.2);
+    padding: 8px 8px;
   }
 
   #genres a {
     text-decoration: none;
     color: black;
+  }
+
+  #genres a:hover {
+    color: #757575;
+    text-decoration: underline;
   }

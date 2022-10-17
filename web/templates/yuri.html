@@ -28,20 +28,28 @@
     
         <!-- filter function -->
         <h3>百合作品</h3>
+        <div class="row">
+            <label>篩選</label>
+        <div>
         <div class="cond">
-            <b>篩選</b><br />
-            <label><input type="checkbox" v-model="filters.author" /> 作者</label>
-            <select>
-                <option>test1</option>
-            </select><br />
-            <label><input type="checkbox" v-model="filters.publisher"> 出版社</label>
-            <select>
-                <option>test2</option>
-            </select><br />
-            <label><input type="checkbox" v-model="filters.chkr18"> R18</label>
-            <select>
-                <option>test3</option>
-            </select><br />
+            <div class="select">
+                <label><input type="checkbox" v-model="filters.author" /> 作者</label>
+                <select>
+                    <option>test1</option>
+                </select>
+            </div>
+            <div class="select">
+                <label><input type="checkbox" v-model="filters.publisher"> 出版社</label>
+                <select>
+                    <option>test2</option>
+                </select>
+            </div>
+            <div class="select">
+                <label><input type="checkbox" v-model="filters.chkr18"> R18</label>
+                <select>
+                    <option>test3</option>
+                </select>
+            <div>
         </div>
 
         <table id="yuris">
@@ -76,7 +84,7 @@
         <div id="pagination-wrapper" class="pagination">
         </div>
     
-    </div>
+    </>
     <script type="application/json" id="yuris_json">{[yuris|safe]}</script>
 </body>
 

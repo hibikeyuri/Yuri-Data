@@ -1,9 +1,11 @@
 #authors {
     clear: both;
-    text-align: left;
+    text-align: center;
     border-collapse: collapse;
 
-    width: 100%;
+    width: 95%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 #authors th {
@@ -11,11 +13,16 @@
 }
 
 #authors td {
-    border: 1px solid black;
-    padding: 2px 5px;
+    border-bottom: 1px solid rgb(0, 0, 0, 0.2);
+    padding: 8px 8px;
 }
 
-a {
-    font-weight: normal;
-    color: blue;
+#authors a {
+    text-decoration: none;
+    color: black;
+  }
+
+#authors a:hover {
+    color: #757575;
+    text-decoration: underline;
 }
