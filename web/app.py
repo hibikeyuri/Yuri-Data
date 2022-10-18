@@ -47,6 +47,7 @@ def get_yuri_info(id):
     author = []
     buyurl = []
     tankoubon = []
+    publisher = []
     moreinfo = {}
 
     with connection.cursor() as cursor:
@@ -191,4 +192,5 @@ def page_not_found(error):
 
 
 if __name__ == '__main__':
+    app.debug = True
     app.run(host='localhost', port=5000)

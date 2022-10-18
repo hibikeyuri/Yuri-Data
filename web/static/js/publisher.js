@@ -28,7 +28,7 @@ $(function() {
             var row = `
                     <tr>
                     <td>${publishers_info[i].id}</td>
-                    <td><a href="/genres/${publishers_info[i].id}">${publishers_info[i].name}</a></td>
+                    <td><a href="/publishers/${publishers_info[i].id}">${publishers_info[i].name}</a></td>
                     </tr>
                     `
             table.append(row)
