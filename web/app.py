@@ -300,6 +300,15 @@ def publisher_page():
     publishers = get_publishers()
     return render_template('publisher.html', publishers=dumps(publishers))
 
+@app.route("/publishers/<int:id>")
+def publisher_sakuhin_page(id):
+    try:
+        info = get_publisher_sakuhin_info(id)
+        print(info)
+    except KeyError as err:
+        abort(404)
+    return render_template('publishersakuhin.html', title = info[0]['publisher_name'], pub_saku=dumps(info))
+
 @app.errorhandler(404)
 def page_not_found(error):
     return render_template('page_not_found.html'), 404
