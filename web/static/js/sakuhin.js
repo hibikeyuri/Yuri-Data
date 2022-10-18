@@ -14,6 +14,10 @@ $(function() {
         created: function() {
         },
         methods: {
+            toDateString: function() {
+                const date = new Date(this.info.publish_time)
+                return date.toLocaleDateString();
+            },
         },
         computed: {
         }

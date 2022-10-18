@@ -169,7 +169,7 @@ def yuri_page(id):
         info, moreinfo = get_yuri_info(id)
     except KeyError as err:
         abort(404)
-    return render_template('sukuhin.html', title = info['name'], info=dumps(info), moreinfo=dumps(moreinfo))
+    return render_template('sakuhin.html', title = info['name'], info=dumps(info), moreinfo=dumps(moreinfo))
 
 @app.route("/authors")
 def author_page():

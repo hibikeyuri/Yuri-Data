@@ -2,11 +2,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" href="{[ url_for('static', filename='css/sukuhin.css') ]}">
+<link rel="stylesheet" href="{[ url_for('static', filename='css/sakuhin.css') ]}">
 <link rel="stylesheet" href="{[ url_for('static', filename='css/homepage.css') ]}">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
-<script src="{[ url_for('static', filename='js/sukuhin.js') ]}"></script>
+<script src="{[ url_for('static', filename='js/sakuhin.js') ]}"></script>
 <title>{[ title ]}</title>
 </head>
 <body>
@@ -85,7 +85,7 @@
       </div>
       <div class="row row2">
         <div class="col col1">出版日期</div>
-        <div class="col col2">{{ info.publish_time }}</div>
+        <div class="col col2">{{ toDateString() }}</div>
       </div>
       <div class="row row3">
         <div class="col col1">出版雜誌 / 出版標籤</div>
@@ -95,7 +95,7 @@
         <div class="col col1">購買連結</div>
         <div class="col col2">
           <div class="buy-container">
-            <a v-for="buyurl in moreinfo.buyurl" v-bind:href="buyurl"><button class="buy buy1"><span>OK </span></button><a>
+            <a v-for="(buyurl, index) in moreinfo.buyurl" v-bind:href="buyurl"><button class="buy buy1"><span>{{ index + 1 }}</span></button><a>
           </div>
         </div>
       </div>
