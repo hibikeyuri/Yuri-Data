@@ -1,3 +1,4 @@
+from csv import excel
 import os, sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
@@ -93,6 +94,101 @@ def get_yuri_info(id):
 
         return info, moreinfo         
 
+def get_author_sakuhin_info(id):
+    connection = connect()
+    #取得作者id後，從yuritoauthor獲取YID
+    sql_select_from_yuri_id = 'SELECT * FROM {} WHERE id=%s'.format(TABLE_YURI)
+    sql_select_yuritoauthor = 'SELECT `YID` FROM {} as t1 WHERE (t1.AID=%s)'.format(TABLE_YURITOAUTHOR)
+    sql_select_from_author = 'SELECT `name` FROM {} WHERE id=%s'.format(TABLE_AUTHOR)
+    
+    info = []
+
+    with connection.cursor() as cursor:
+
+        cursor.execute(sql_select_from_author, (id))
+        author_name = cursor.fetchall()[0]
+
+        cursor.execute(sql_select_yuritoauthor, (id))
+        info_temp = cursor.fetchall()
+        for tmp in info_temp:
+            cursor.execute(sql_select_from_yuri_id, (tmp['YID']))
+            datas = cursor.fetchall()
+            for dbs in datas:
+                info.append({
+                    'id': dbs['id'],
+                    'name': dbs['name'],
+                    'author': dbs['author'],
+                    'publisher': dbs['publisher'],
+                    'carrier': dbs['carrier'],
+                    'ero': dbs['ero'],
+                    'icon': dbs['small_img_url'],
+                    'author_name': author_name['name']
+            })
+
+        connection.close()
+
+        return info
+
+def get_publisher_sakuhin_info(id):
+    #取得出版社名稱
+    publisher = get_publishers()[id - 1]
+    print(publisher)
+    connection = connect()
+    sql_select_from_yuri_id = 'SELECT * FROM {} WHERE publisher=%s'.format(TABLE_YURI)
+    
+    info = []
+    with connection.cursor() as cursor:
+        cursor.execute(sql_select_from_yuri_id, (publisher['name']))
+        datas = cursor.fetchall()
+        for dbs in datas:
+            info.append({
+                'id': dbs['id'],
+                'name': dbs['name'],
+                'author': dbs['author'],
+                'publisher': dbs['publisher'],
+                'carrier': dbs['carrier'],
+                'ero': dbs['ero'],
+                'icon': dbs['small_img_url'],
+                'publisher_name': publisher['name']
+            })
+
+        connection.close()
+    return info
+
+def get_genre_sakuhin_info(id):
+    connection = connect()
+    #取得作者id後，從yuritoauthor獲取YID -> 
+    sql_select_from_yuri_id = 'SELECT * FROM {} WHERE id=%s'.format(TABLE_YURI)
+    sql_select_yuritogenre = 'SELECT `YID` FROM {} as t1 WHERE (t1.GID=%s)'.format(TABLE_YURITOGENRE)
+    sql_select_from_genre = 'SELECT `name` FROM {} WHERE id=%s'.format(TABLE_GENRE)
+
+    info = []
+    with connection.cursor() as cursor:
+
+        cursor.execute(sql_select_from_genre, (id))
+        genre_name = cursor.fetchall()[0]
+
+        cursor.execute(sql_select_yuritogenre, (id))
+        info_temp = cursor.fetchall()
+        for tmp in info_temp:
+            cursor.execute(sql_select_from_yuri_id, (tmp['YID']))
+            datas = cursor.fetchall()
+            for dbs in datas:
+                info.append({
+                    'id': dbs['id'],
+                    'name': dbs['name'],
+                    'author': dbs['author'],
+                    'publisher': dbs['publisher'],
+                    'carrier': dbs['carrier'],
+                    'ero': dbs['ero'],
+                    'icon': dbs['small_img_url'],
+                    'genre_name': genre_name['name']
+            })
+
+        connection.close()
+
+        return info
+
 def get_authors():
     connection = connect()
     with connection.cursor() as cursor:
@@ -175,6 +271,15 @@ def yuri_page(id):
 def author_page():
     authors = get_authors()
     return render_template('author.html', authors=dumps(authors))
+
+@app.route("/authors/<int:id>")
+def author_sakuhin_page(id):
+    try:
+        info = get_author_sakuhin_info(id)
+        print(info)
+    except KeyError as err:
+        abort(404)
+    return render_template('authorsakuhin.html', title = info[0]['author_name'], auth_saku=dumps(info))
 
 @app.route("/genres")
 def genre_page():

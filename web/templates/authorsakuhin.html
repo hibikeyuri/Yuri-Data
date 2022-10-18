@@ -3,12 +3,12 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Yuri Data</title>
+    <title>{[ title ]}</title>
     <link rel="stylesheet" href="{[ url_for('static', filename='css/yuri.css') ]}">
     <link rel="stylesheet" href="{[ url_for('static', filename='css/homepage.css') ]}">    
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
-    <script src="{[ url_for('static', filename='js/yuri.js') ]}"></script>
+    <script src="{[ url_for('static', filename='js/authorsakuhin.js') ]}"></script>
 </head>
 
 <body>
@@ -23,13 +23,14 @@
 
         <ul class="breadcrumb">
             <li><a href="/">Home</a></li>
-            <li>Yuris</li>
+            <li><a href="/authors">Authors</a></li>
+            <li>{[ title ]}</li>
         </ul>
     
         <!-- filter function -->
         <h3></h3>
 
-        <table id="author-sukuhin">
+        <table id="yuris">
             <thead>
                 <tr>
                 </tr>
@@ -39,11 +40,9 @@
             </tbody>
         </table>
 
-        <div id="pagination-wrapper" class="pagination">
-        </div>
-    
-    </>
-    <script type="application/json" id="yuris_json">{[yuris|safe]}</script>
-</body>
+        <div id="pagination-wrapper" class="pagination"></div>
 
+    <div>
+<script type="application/json" id="auth_saku_json">{[auth_saku|safe]}</script>
+</body>
 </html>

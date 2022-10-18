@@ -33,7 +33,7 @@
     <tr><td rowspan="7"><img v-bind:src="info.main_img_url"/></td></tr>
     <tr><td>名稱</td><td>{{ info.name }}</td></tr>
     <tr><td>作者</td><td v-for="author in moreinfo.author">{{ author }}</td></tr>
-    <tr><td>種類</td><td v-for="genre in moreinfo.genre">{{ genre }}</td></tr>
+    <tr><td>種類</td><td><span v-for="genre in moreinfo.genre">{{ genre }}</span><td></tr>
     <tr><td>百合</td><td>{{ info.yuri_status }}</td></tr>
     <tr><td>載體</td><td>{{ info.carrier }}</td></tr>
     <tr><td>R18</td><td v-if="info.ero">{{ r18 }}</td><td v-else>{{ nor18 }}</td></tr>
