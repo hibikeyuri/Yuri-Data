@@ -27,6 +27,8 @@
 
   <a href="/">←所有百合作品</a>
   <h3>作品基本資料</h3>
+
+  <!-- 舊版面區域 -->
   <table id="info">
     <tr><td rowspan="7"><img v-bind:src="info.main_img_url"/></td></tr>
     <tr><td>名稱</td><td>{{ info.name }}</td></tr>
@@ -37,10 +39,68 @@
     <tr><td>R18</td><td v-if="info.ero">{{ r18 }}</td><td v-else>{{ nor18 }}</td></tr>
   </table>
 
-  <h3>Introduction</h3>
-  <div>{{ info.introduction }}</div>
-  <h3>發售資訊</h3>
-  <div>{{ info.publish_time }} {{ info.publisher }} {{ info.publish_magzine }} {{ info.publish_label }}</div>
+  <!-- 新版面區域 -->
+  <div class="first-row">
+    <div class="main-container">
+      <div class="img-col"><img v-bind:src="info.main_img_url"/></div>
+      <div class="data-col">
+        <div class="data-container">
+          <div class="row row1">
+            <div class="col col1">作品名稱</div>
+            <div class="col col2">{{ info.name }}</div>
+          </div>
+          <div class="row row2">
+            <div class="col col1">作者</div>
+            <div class="col col2" v-for="author in moreinfo.author">{{ author }}</div>
+          </div>
+          <div class="row row3">
+            <div class="col col1">種類</div>
+            <div class="col col2" v-for="genre in moreinfo.genre">{{ genre }}</div>
+          </div>
+          <div class="row row4">
+            <div class="col col1">百合</div>
+            <div class="col col2">{{ info.yuri_status }}</div>
+          </div>
+          <div class="row row5">
+            <div class="col col1">載體</div>
+            <div class="col col2">{{ info.carrier }}</div>
+          </div>
+          <div class="row row6">
+            <div class="col col1">R18</div>
+            <div class="col col2" v-if="info.ero">{{ nor18 }}</div><div class="col col2" v-else>{{ nor18 }}</div>
+          </div>
+          <div class="row row7">
+            <div class="col col1">出版社</div>
+            <div class="col col2">{{ info.publisher }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="second-row">
+    <div class="sub-container">
+      <div class="row row1">
+        <div class="col col1">introduction</div>
+        <div class="col col2">{{ info.introduction }}</div>
+      </div>
+      <div class="row row2">
+        <div class="col col1">出版日期</div>
+        <div class="col col2">{{ info.publish_time }}</div>
+      </div>
+      <div class="row row3">
+        <div class="col col1">出版雜誌 / 出版標籤</div>
+        <div class="col col2">{{ info.publish_magzine }} / {{ info.publish_label }}</div>
+      </div>
+      <div class="row row4">
+        <div class="col col1">購買連結</div>
+        <div class="col col2">
+          <div class="buy-container">
+            <a v-for="buyurl in moreinfo.buyurl" v-bind:href="buyurl"><button class="buy buy1"><span>OK </span></button><a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <h3>其他單行本</h3>
   <div class="flex">

@@ -1,7 +1,11 @@
+/* 舊版面區域的CSS */
 .flex {
     display: flex;
     border: 1px solid black;
     flex-wrap: wrap;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .flex img {
@@ -18,3 +22,90 @@
     border: 1px solid black;
     height: 300px;
 }
+
+#info {
+    display: none;
+}
+
+/* 新版面區域的CSS */
+html, body {
+    margin: 0px;
+    padding: 0px;
+  }
+  
+  .buy-container, .buy {
+    border: 1px solid black;
+  }
+  
+  .first-row {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .second-row {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .main-container {
+    display: flex;
+    align-items: stretch;
+  }
+  
+  .data-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  .data-container .row {
+    display: flex;
+    flex-grow: 1;
+  }
+  
+  .sub-container {
+    display: flex;
+    flex-direction: column;
+  }
+  .sub-container .row {
+    display: flex;
+    flex-grow: 1;
+  }
+  
+  .img-col {
+    width: 30%;
+  }
+  .img-col img {
+    max-width: 100%;
+  }
+  
+  .data-col {
+    width: 70%;
+  }
+  
+  .col1 {
+    width: 30%;
+    word-wrap: break-word;
+    padding: 5px;
+    background-color: rgba(226, 43, 48, 0.2);
+    box-sizing: border-box;
+    border-bottom: 1px solid white;
+  }
+  
+  .col2 {
+    width: 70%;
+    word-wrap: break-word;
+    padding: 5px;
+  }
+  
+  .buy-container {
+    width: 100%;
+  }
+  
+  .buy {
+    width: 170px;
+    height: 30px;
+    border-radius: 5px 5px;
+    display: inline-block;
+  }
