@@ -286,6 +286,15 @@ def genre_page():
     genres = get_genres()
     return render_template('genre.html', genres=dumps(genres))
 
+@app.route("/genres/<int:id>")
+def genre_sakuhin_page(id):
+    try:
+        info = get_genre_sakuhin_info(id)
+        print(info)
+    except KeyError as err:
+        abort(404)
+    return render_template('genresakuhin.html', title = info[0]['genre_name'], genre_saku=dumps(info))
+
 @app.route("/publishers")
 def publisher_page():
     publishers = get_publishers()
