@@ -108,4 +108,6 @@ html, body {
     height: 30px;
     border-radius: 5px 5px;
     display: inline-block;
+
+    cursor: pointer;
   }

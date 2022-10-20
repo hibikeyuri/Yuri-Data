@@ -49,7 +49,7 @@ $(function() {
         var trimmedData = querySet.slice(trimStart, trimEnd)
         // calculate max ceiling pages number
         var pages = Math.ceil(querySet.length / rows)
-        console.log('pages: ', pages)
+        // console.log('pages: ', pages)
 
         return {
             'querySet': trimmedData,
@@ -61,7 +61,7 @@ $(function() {
     function buildTable() {
         var table = $('#table-body')
         var data = pagination(state.querySet, state.page, state.rows)
-        console.log('Data: ', data)
+        // console.log('Data: ', data)
         var myList = data.querySet
 
         for (let i=0; i<myList.length; i+=1) {
@@ -135,5 +135,14 @@ $(function() {
             buildTable()
         })
     }
+
     buildTable()
-});
+
+    //for different view rows
+    $(".select-container").on('change', function() {
+        state.rows = Number($(".select-container option:selected").val())
+        $("#table-body").empty()
+        buildTable()
+    })
+
+})
