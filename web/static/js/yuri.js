@@ -62,6 +62,13 @@ $(function() {
         var table = $('#table-body')
         var data = pagination(state.querySet, state.page, state.rows)
         // console.log('Data: ', data)
+
+        const maxpage = data.pages
+        if(maxpage < state.page) {
+            state.page = maxpage
+            data = pagination(state.querySet, maxpage, state.rows)
+        }
+
         var myList = data.querySet
 
         for (let i=0; i<myList.length; i+=1) {
@@ -79,6 +86,7 @@ $(function() {
             table.append(row)
         }
         pageButtons(data.pages)
+        console.log(data.pages)
     };
 
     function pageButtons(pages) {
