@@ -109,5 +109,16 @@ html, body {
     border-radius: 5px 5px;
     display: inline-block;
 
+    border-color: #f08dae;
+    background-color: white;
+    color: #f08dae;
+
+    cursor: pointer;
+    transition: 0.15s;
+  }
+
+  .buy:hover {
+    background-color: #f08dae;
+    color: white;
     cursor: pointer;
   }
