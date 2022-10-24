@@ -1,6 +1,7 @@
 $(function() {
     var yuris_info = JSON.parse($('#yuris_json').text());
- 
+    var filters_info = JSON.parse($('#filters_json').text());
+
     //its a trial for table head render
     var app = new Vue({
         el: '#app',
@@ -36,6 +37,7 @@ $(function() {
 
     state =  {
         'querySet': yuris_info,
+        'filters': filters_info,
         'page': 1,
         'rows': 20,
         'window': 5
@@ -154,4 +156,23 @@ $(function() {
         buildTable()
     })
 
+
+    //for filters
+    var modal = document.querySelector(".modal-container")
+    var btn = document.querySelector(".modal-button")
+    var span = document.querySelector(".modal-close")
+
+    btn.onclick = function() {
+        modal.style.display = "block"
+    }
+
+    span.onclick = function() {
+        modal.style.display = "none"
+    }
+
+    window.onclick = function(event) {
+        if(event.target == modal) {
+            modal.style.display = "none"
+        }
+    }
 })

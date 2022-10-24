@@ -341,7 +341,8 @@ def home_page():
 @app.route("/yuris")
 def yuri_home_page():
     yuris = get_yuris()
-    return render_template('yuri.html', yuris=dumps(yuris))
+    filters = get_yuris_filters()
+    return render_template('yuri.html', yuris=dumps(yuris), filters=dumps(filters))
 
 @app.route("/yuris/<int:id>")
 def yuri_page(id):
@@ -399,6 +400,5 @@ def page_not_found(error):
 
 
 if __name__ == '__main__':
-    #app.debug = True
-    #app.run(host='localhost', port=5000)
-    print(get_yuris_filters())
+    app.debug = True
+    app.run(host='localhost', port=5000)

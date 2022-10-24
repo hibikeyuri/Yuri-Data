@@ -37,8 +37,8 @@
 
 .pagination {
     float: right;
- }
- 
+}
+
 .pagination a {
     color: black;
     float: left;
@@ -49,12 +49,111 @@
     margin-right: auto;
     margin-left: auto;
 }
-  
+
 .pagination a.active {
     background-color: dodgerblue;
     color: white;
 }
-  
+
 .pagination a:hover:not(.active) {
-      background-color: #ddd;
+    background-color: #ddd;
+}
+
+.form-select {
+    list-style:none;
+    padding: 6px 12px;
+    border-radius: 5px 5px;
+    border-color: #f08dae;
+    outline: none;
+}
+
+.modal-button {
+    padding: 6px 12px;
+    border: solid 1px black;
+    border-radius: 5px 5px;
+    color: #f08dae;
+    border-color: #f08dae;
+    background-color: white;
+    transition: 0.15s;
+}
+
+.modal-button:hover {
+    background-color: #f08dae;
+    color: white;
+    cursor: pointer;
+}
+
+.modal-container {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    padding-top: 30px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: gba(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.modal-content, .modal-header {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 16px 5px;
+    max-width: 500px;
+    animation-name: animatetop;
+    animation-duration: 0.3s;
+}
+
+.modal-close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    text-decoration: none;
+    cursor: pointer;
+    margin-top: -5px;
+}
+
+.modal-close:hover {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal-header {
+    border-radius: 5px 5px 0px 0px;
+    border-bottom: 0px;
+}
+
+.modal-content {
+    border-radius: 0px 0px 5px 5px;
+    border-top: 1px solid grey;
+    max-height: 250px;
+    overflow-y: auto;
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.col {
+    width: 100%;
+}
+
+.col-content {
+    display: inline-block;
+}
+
+@keyframes animatetop {
+    0% {
+        top: -200px;
+        opacity: 0;
+    }
+
+    100% {
+        top: 0px;
+        opacity: 1;
+    }
 }

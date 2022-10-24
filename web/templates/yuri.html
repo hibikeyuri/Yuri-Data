@@ -26,30 +26,78 @@
             <li>Yuris</li>
         </ul>
     
-        <!-- filter function -->
         <h3>百合作品</h3>
-        <div class="row">
-            <label>篩選</label>
-        <div>
-        <div class="cond">
-            <div class="select">
-                <label><input type="checkbox" v-model="filters.author" /> 作者</label>
-                <select>
-                    <option>test1</option>
-                </select>
+        <!-- filter function -->
+        <button class="modal-button">篩選條件</button>
+        <div class="modal-container">
+            <div class="modal-header">選擇篩選條件
+                <div class="modal-close">&times;</div>
             </div>
-            <div class="select">
-                <label><input type="checkbox" v-model="filters.publisher"> 出版社</label>
-                <select>
-                    <option>test2</option>
-                </select>
+            <div class="modal-content">
+                <div class="row row1"> 
+                <div class="col col-title"><b>載體</b></div>
+                <div class="col col-content">
+                    <input class="form-check-input" type="checkbox" id="check-1"/>
+                    <label class="form-check-form" for="check-1">漫畫</label>
+                    <input class="form-check-input" type="checkbox"/>
+                    <label class="form-check-form">小說</label>
+                    <input class="form-check-input" type="checkbox"/>
+                    <label class="form-check-form">小說</label>
+                    <input class="form-check-input" type="checkbox"/>
+                    <label class="form-check-form">小說</label>
+                    <input class="form-check-input" type="checkbox"/>
+                    <label class="form-check-form">小說</label>
+                    <input class="form-check-input" type="checkbox"/>
+                    <label class="form-check-form">小說</label>
+                    <input class="form-check-input" type="checkbox"/>
+                    <label class="form-check-form">小說</label>
+                    <input class="form-check-input" type="checkbox"/>
+                    <label class="form-check-form">小說</label>
+                    <input class="form-check-input" type="checkbox"/>
+                    <label class="form-check-form">小說</label>
+                    <input class="form-check-input" type="checkbox"/>
+                    <label class="form-check-form">小說</label>
+                    <input class="form-check-input" type="checkbox"/>
+                    <label class="form-check-form">小說</label>
+                    <input class="form-check-input" type="checkbox"/>
+                    <label class="form-check-form">小說</label>
+                </div>
+                </div>
+                <div class="row row2">
+                <div class="col col-title"><b>Genre</b></div>
+                <div class="col col-content">
+                    <input class="form-check-input" type="checkbox"/>
+                    <label class="form-check-form">測試</label>
+                    <input class="form-check-input" type="checkbox"/>
+                    <label class="form-check-form">測試</label>
+                    <input class="form-check-input" type="checkbox"/>
+                    <label class="form-check-form">測試</label>
+                </div>
+                </div>
+                <div class="row row3">
+                <div class="col col-title"><b>出版社</b></div>
+                <div class="col col-content">
+                    <input class="form-check-input" type="checkbox"/>
+                    <label class="form-check-form">芳文社</label>
+                </div>
+                </div>
+                <div class="row row5">
+                <div class="col col-title"><b>工口</b></div>
+                <div class="col col-content">
+                    <input class="form-check-input" type="checkbox"/>
+                    <label class="form-check-form">工口</label>
+                    <input class="form-check-input" type="checkbox"/>
+                    <label class="form-check-form">正常向</label>
+                </div>
+                </div>
+                <div class="row row6">
+                <div class="col col-title"><b>發售日年代(第一卷)</b></div>
+                <div class="col col-content">
+                    <input class="form-check-input" type="checkbox"/>
+                    <label class="form-check-form">2019</label>
+                </div>
+                </div>
             </div>
-            <div class="select">
-                <label><input type="checkbox" v-model="filters.chkr18"> R18</label>
-                <select>
-                    <option>test3</option>
-                </select>
-            <div>
         </div>
 
         <div class="select-container">
@@ -80,6 +128,7 @@
     
     </div>
     <script type="application/json" id="yuris_json">{[yuris|safe]}</script>
+    <script type="application/json" id="filters_json">{[filters|safe]}</script>
 </body>
 
 </html>
