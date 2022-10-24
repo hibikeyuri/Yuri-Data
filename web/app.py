@@ -324,7 +324,7 @@ def get_publish_times():
         res = list(res)
         res.sort()
         
-        res = [{'id': id + 1, 'year': year} for id, year in enumerate(res)]
+        res = [{'id': id + 1, 'name': year} for id, year in enumerate(res)]
 
         connection.close()
 

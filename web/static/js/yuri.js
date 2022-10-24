@@ -175,4 +175,37 @@ $(function() {
             modal.style.display = "none"
         }
     }
+
+    var modal_content = document.querySelector(".modal-content")
+    var render_template = ''
+
+    // <div class="row row1"> 
+    // <div class="col col-title"><b>載體</b></div>
+    // <div class="col col-content">
+    //     <input class="form-check-input" type="checkbox" id="check-1"/>
+    //     <label class="form-check-form" for="check=1">測試</label>
+    // </div>
+    // </div>
+
+    function buildModal() {
+        for(let key in filters_info) {
+            render_template += `
+            <div class="row">
+                <div class="col col-title"><b>${filters_info[key].label}</b></div>
+                <div class="col col-content">
+            `
+            let opts = filters_info[key].options
+            for(let i = 0; i < opts.length; i++) {
+                render_template += `
+                    <input class="form-check-input" type="checkbox" id="check-${opts[i].name}" value="${opts[i].name}"/>
+                    <label class="form-check-form" for="check-${opts[i].name}">${opts[i].name}</label>
+                `
+            }
+            render_template += '</div></div>'
+        }
+    
+        $(".modal-content").append(render_template)   
+    }
+    
+    buildModal()
 })
