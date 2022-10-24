@@ -1,6 +1,7 @@
 $(function() {
     var yuris_info = JSON.parse($('#yuris_json').text());
  
+    //its a trial for table head render
     var app = new Vue({
         el: '#app',
         props: {

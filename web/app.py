@@ -1,5 +1,6 @@
 from csv import excel
 import os, sys
+from datetime import datetime, timezone, timedelta
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from flask import Flask
@@ -14,6 +15,49 @@ app.secret_key = "nozomizore_is_the_best"
 app.jinja_env.variable_start_string = '{['
 app.jinja_env.variable_end_string = ']}'
 
+def get_yuris_filters():
+    filters = {}
+
+    #載體
+    filters['carrier'] = {
+        'label': '載體',
+        'options': [{'id': 0, 'name': '漫画'}, {'id': 1, 'name': '小説'}],
+        'type': ''
+    }
+
+    #種類
+    genres = get_genres()
+    filters['genre'] = {
+        'label': '種類',
+        'options': genres,
+        'type': ''
+    }
+
+    #出版社
+    publishers = get_publishers()
+    filters['publisher'] = {
+        'label': '出版社',
+        'options': publishers,
+        'type': ''
+    }  
+
+    #工口
+    filters['ero'] = {
+        'label': 'エロ',
+        'options': [{'id': 0, 'name': '正常向'}, {'id': 1, 'name': 'エロ'}],
+        'type': ''
+    }
+
+    #發售日年代
+    years = get_publish_times()
+    filters['year'] = {
+        'label': '發售日年代',
+        'options': years,
+        'type': ''
+    }
+
+    return filters
+
 def get_yuris():
     connection = connect()
     with connection.cursor() as cursor:
@@ -22,7 +66,20 @@ def get_yuris():
 
         datas = cursor.fetchall()
         res = []
+
+        sql_select_genre = 'SELECT `name` FROM {} as t1, {} as t2 WHERE (YID=%s) AND (t1.GID=t2.id)'.format(TABLE_YURITOGENRE, TABLE_GENRE)
+
+
         for dbs in datas:
+            genre = []
+
+            #獲取作品種類
+            cursor.execute(sql_select_genre, (dbs['id']))
+            genre_sql_data = cursor.fetchall()
+
+            for gen in genre_sql_data:
+                genre.append(gen['name'])
+            
             res.append({
                 'id': dbs['id'],
                 'name': dbs['name'],
@@ -30,9 +87,10 @@ def get_yuris():
                 'publisher': dbs['publisher'],
                 'carrier': dbs['carrier'],
                 'ero': dbs['ero'],
-                'icon': dbs['small_img_url']
+                'icon': dbs['small_img_url'],
+                'publish_time': dbs['publish_time'],
+                'genre': genre
             })
-        connection.close()
 
         return res
 
@@ -246,6 +304,32 @@ def get_publishers():
         connection.close()
         return res
 
+def get_publish_times():
+    connection = connect()
+    with connection.cursor() as cursor:
+        sql_select_from_yuri= 'SELECT `publish_time` FROM {}'.format(TABLE_YURI)
+        cursor.execute(sql_select_from_yuri)
+
+        datas = cursor.fetchall()
+        count = 0
+        res = []
+        publishers = dict()
+
+        for dbs in datas:
+            if(dbs['publish_time'] is None):
+                continue
+            res.append(dbs['publish_time'].year)
+
+        res = set(res)
+        res = list(res)
+        res.sort()
+        
+        res = [{'id': id + 1, 'year': year} for id, year in enumerate(res)]
+
+        connection.close()
+
+        return res
+
 @app.route("/test")
 def test():
     return render_template('index.html')
@@ -315,5 +399,6 @@ def page_not_found(error):
 
 
 if __name__ == '__main__':
-    app.debug = True
-    app.run(host='localhost', port=5000)
+    #app.debug = True
+    #app.run(host='localhost', port=5000)
+    print(get_yuris_filters())
