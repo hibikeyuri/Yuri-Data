@@ -212,15 +212,21 @@ $(function() {
     $(".modal-container").on("change", function() {
         let res = yuris_info
         for(let key in filters_info) {
-            if(key !== "genre") {
-                let valuechecked = []
-                $.each($("input[name='"+key+"']:checked"), function() {
-                    valuechecked.push($(this).val())
-                })
-                console.log(key + ": " + valuechecked)
+            let valuechecked = []
+            $.each($("input[name='"+key+"']:checked"), function() {
+                valuechecked.push($(this).val())
+            })
+            console.log(key + ": " + valuechecked)
+            if(key !== "genre"){
                 res = res.filter(yuri => { return !valuechecked.length || valuechecked.includes(yuri[key]) })
-                console.log(res)
             }
+            else {
+                console.log("in genre")
+                console.log(res[0][key])//['エロ', '同人作品', '年の差']
+                console.log(res[0][key].some(el => valuechecked.includes(el)))
+                res = res.filter(yuri => { return !valuechecked.length || yuri[key].some(genre => valuechecked.includes(genre))})
+            }
+            console.log(res)
         }
         state.querySet = res
         $("#table-body").empty()
