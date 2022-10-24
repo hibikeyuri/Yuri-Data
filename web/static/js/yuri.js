@@ -197,7 +197,7 @@ $(function() {
             let opts = filters_info[key].options
             for(let i = 0; i < opts.length; i++) {
                 render_template += `
-                    <input class="form-check-input" type="checkbox" id="check-${opts[i].name}" value="${opts[i].name}"/>
+                    <input class="form-check-input" type="checkbox" id="check-${opts[i].name}" name="${key}" value="${opts[i].name}"/>
                     <label class="form-check-form" for="check-${opts[i].name}">${opts[i].name}</label>
                 `
             }
@@ -208,4 +208,22 @@ $(function() {
     }
     
     buildModal()
+
+    $(".modal-container").on("change", function() {
+        let res = yuris_info
+        for(let key in filters_info) {
+            if(key !== "genre") {
+                let valuechecked = []
+                $.each($("input[name='"+key+"']:checked"), function() {
+                    valuechecked.push($(this).val())
+                })
+                console.log(key + ": " + valuechecked)
+                res = res.filter(yuri => { return !valuechecked.length || valuechecked.includes(yuri[key]) })
+                console.log(res)
+            }
+        }
+        state.querySet = res
+        $("#table-body").empty()
+        buildTable()
+    })
 })

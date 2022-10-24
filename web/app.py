@@ -42,7 +42,7 @@ def get_yuris_filters():
     }  
 
     #工口
-    filters['ero'] = {
+    filters['r18'] = {
         'label': 'エロ',
         'options': [{'id': 0, 'name': '正常向'}, {'id': 1, 'name': 'エロ'}],
         'type': ''
@@ -80,6 +80,16 @@ def get_yuris():
             for gen in genre_sql_data:
                 genre.append(gen['name'])
             
+            if(dbs['publish_time'] is None):
+                year = 0
+            else:
+                year = dbs['publish_time'].year
+
+            if(dbs['ero']):
+                r18 = 'エロ'
+            else:
+                r18 = '正常向'
+
             res.append({
                 'id': dbs['id'],
                 'name': dbs['name'],
@@ -89,7 +99,9 @@ def get_yuris():
                 'ero': dbs['ero'],
                 'icon': dbs['small_img_url'],
                 'publish_time': dbs['publish_time'],
-                'genre': genre
+                'genre': genre,
+                'year': str(year),
+                'r18': r18
             })
 
         return res
