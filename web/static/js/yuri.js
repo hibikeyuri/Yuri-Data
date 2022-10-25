@@ -71,6 +71,10 @@ $(function() {
             state.page = maxpage
             data = pagination(state.querySet, maxpage, state.rows)
         }
+        // console.log("data total pages: " + data.pages)
+        if(state.page == 0) {
+            state.page = 1
+        }
 
         var myList = data.querySet
 
@@ -222,5 +226,6 @@ $(function() {
         state.querySet = res
         $("#table-body").empty()
         buildTable()
+        // console.log(state.page)
     })
 })
