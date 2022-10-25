@@ -89,7 +89,7 @@ $(function() {
             table.append(row)
         }
         pageButtons(data.pages)
-        console.log(data.pages)
+        // console.log(data.pages)
     };
 
     function pageButtons(pages) {
@@ -176,16 +176,8 @@ $(function() {
         }
     }
 
-    var modal_content = document.querySelector(".modal-content")
-    var render_template = ''
-
-    // <div class="row row1"> 
-    // <div class="col col-title"><b>載體</b></div>
-    // <div class="col col-content">
-    //     <input class="form-check-input" type="checkbox" id="check-1"/>
-    //     <label class="form-check-form" for="check=1">測試</label>
-    // </div>
-    // </div>
+    let modal_content = document.querySelector(".modal-content")
+    let render_template = ''
 
     function buildModal() {
         for(let key in filters_info) {
@@ -216,17 +208,16 @@ $(function() {
             $.each($("input[name='"+key+"']:checked"), function() {
                 valuechecked.push($(this).val())
             })
-            console.log(key + ": " + valuechecked)
+            // console.log(key + ": " + valuechecked)
             if(key !== "genre"){
                 res = res.filter(yuri => { return !valuechecked.length || valuechecked.includes(yuri[key]) })
             }
             else {
-                console.log("in genre")
-                console.log(res[0][key])//['エロ', '同人作品', '年の差']
-                console.log(res[0][key].some(el => valuechecked.includes(el)))
+                // console.log(res[0][key])//['エロ', '同人作品', '年の差']
+                // console.log(res[0][key].some(el => valuechecked.includes(el)))
                 res = res.filter(yuri => { return !valuechecked.length || yuri[key].some(genre => valuechecked.includes(genre))})
             }
-            console.log(res)
+            // console.log(res)
         }
         state.querySet = res
         $("#table-body").empty()
