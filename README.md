@@ -10,3 +10,7 @@ This project is recording some yuri manga and syousetsu data.
 - routing problem (by flask or by vue, not sure)
 - simple log in page to management platform
 - others
+## Database Architecture
+https://i.imgur.com/mGQDIgF.png
+## Demo
+Demo link: https://youtu.be/Y3azmRQl6E0
