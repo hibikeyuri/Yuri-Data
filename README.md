@@ -11,6 +11,7 @@ This project is recording some yuri manga and syousetsu data.
 - simple log in page to management platform
 - others
 ## Database Architecture
-https://i.imgur.com/mGQDIgF.png
+![image](https://i.imgur.com/mGQDIgF.png)
 ## Demo
 Demo link: https://youtu.be/Y3azmRQl6E0
+![](https://imgur.com/pvB71jU.png)
