@@ -1,7 +1,10 @@
 config.py
+async.py
 __pycache__/*
 
 /*.json
 /*.pyc
 
 web/static/images/*
+
+*.sql

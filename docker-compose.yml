@@ -1,0 +1,40 @@
+version: "1"
+
+services:
+  mysql:
+    build: ./db
+    container_name: yuridb
+    ports:
+      - 3306:3306
+    networks:
+      - yuri000net1
+  
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    environment:
+      PMA_HOST: yuridb
+      PMA_USER: root
+      PMA_PASSWORD: myrootpass
+    ports:
+      - 8081:80
+    networks:
+      - yuri000net1
+    depends_on:
+      - mysql
+
+  backend:
+    build: .
+    container_name: yuriweb
+    ports:
+      - 5000:5000
+    networks:
+      - yuri000net1
+    depends_on:
+      - phpmyadmin
+
+networks:
+  yuri000net1:
+
+
+
