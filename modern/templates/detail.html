@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="breadcrumbs"><a href="{{ url_for('works') }}">Catalogue</a> / Work {{ item.id }}</div>
+<section class="detail">
+<div class="detail-cover" aria-hidden="true"><span>✿</span><b>YURI DATA</b><small>ARCHIVE No. {{ '%04d'|format(item.id) }}</small></div>
+<div class="detail-copy"><div class="eyebrow">CATALOGUE / WORK {{ '%04d'|format(item.id) }}</div><h1>{{ item.title }}</h1><p class="detail-author">{{ item.author }}</p>
+<div class="detail-line"><span>Status</span><strong>{{ item.status or 'Not recorded' }}</strong></div>
+<div class="detail-line"><span>Genres</span><div class="tags">{% for genre in item.genres %}<a href="{{ url_for('works', genre=genre) }}">{{ genre }}</a>{% endfor %}</div></div>
+<div class="detail-line"><span>Archive policy</span><strong>Metadata only / No hotlinked covers</strong></div>
+<a class="back-link" href="{{ url_for('works') }}">← Back to catalogue</a>
+</div></section>
+{% endblock %}
