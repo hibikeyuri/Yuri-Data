@@ -19,3 +19,16 @@ jobs:
       - run: python -m pip install -r modern/requirements.txt
       - run: python -m unittest discover -s tests -v
       - run: python -m compileall -q modern
+      - name: Validate Compose config
+        run: docker compose config --quiet
+      - name: Build modern Docker image
+        run: docker build -f modern/Dockerfile -t yuri-modern:ci .
+      - name: Smoke test container
+        run: |
+          docker run -d --name yuri-ci -p 127.0.0.1:18000:8000 yuri-modern:ci
+          for i in 1 2 3 4 5 6 7 8 9 10; do
+            if curl --fail --silent http://127.0.0.1:18000/healthz; then exit 0; fi
+            sleep 2
+          done
+          docker logs yuri-ci
+          exit 1
