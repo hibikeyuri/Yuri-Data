@@ -1,0 +1,7 @@
+**
+!modern/
+!modern/**
+modern/data/catalog.json
+modern/data/*.private.json
+modern/**/__pycache__/
+modern/**/*.pyc
