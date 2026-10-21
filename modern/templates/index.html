@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero">
+<div class="eyebrow">ARCHIVE / 2026 EDITION</div>
+<h1>小さな物語の、<br><em>大きな目録。</em></h1>
+<p>昔の手作りサイトの雰囲気を残しながら、作品情報を静かに整理する場所。</p>
+<div class="hero-rule"></div><div class="hero-meta"><span>{{ count }} works found</span><span>Local metadata only</span><span>No tracking</span></div>
+</section>
+<div class="workspace">
+<aside class="sidebar">
+<div class="side-title">BROWSE <span>01</span></div>
+<form method="get" action="{{ url_for('works') }}" class="filter-form">
+<label for="q">Search catalogue</label>
+<input id="q" name="q" type="search" maxlength="120" placeholder="Title or author" value="{{ query }}">
+<label for="genre">Genre</label>
+<select name="genre" id="genre"><option value="">All genres</option>{% for name, qty in genre_facets %}<option value="{{ name }}" {% if name == genre %}selected{% endif %}>{{ name }} ({{ qty }})</option>{% endfor %}</select>
+{% if author %}<input name="author" type="hidden" value="{{ author }}">{% endif %}
+<button type="submit">Apply filters <span aria-hidden="true">↗</span></button>
+{% if query or genre or author %}<a class="reset" href="{{ url_for('works') }}">Clear filters</a>{% endif %}
+</form>
+<div class="side-note">Every entry comes from an offline snapshot. Browsing does not contact the original source website.</div>
+</aside>
+<section class="results" aria-label="Catalogue">
+<div class="section-head"><div><span class="eyebrow">CATALOGUE</span><h2>Works <small>/ {{ count }}</small></h2></div><span class="tiny">PAGE {{ page }} / {{ total_pages }}</span></div>
+<div class="work-grid">
+{% for item in items %}
+<a class="work-card" href="{{ url_for('work_detail', work_id=item.id) }}">
+<div class="cover" aria-hidden="true"><span class="cover-icon">✿</span><small>YURI DATA<br>ARCHIVE</small><b>{{ '%03d'|format(item.id) }}</b></div>
+<div class="work-info"><span class="work-index">WORK NO. {{ '%04d'|format(item.id) }}</span><h3>{{ item.title }}</h3><p>{{ item.author }}</p>
+<div class="tags">{% for name in item.genres[:3] %}<span>{{ name }}</span>{% endfor %}</div></div></a>
+{% else %}<p class="empty">No matching works. Try a shorter search.</p>{% endfor %}
+</div>
+<nav class="pagination" aria-label="Pages">
+{% if page > 1 %}<a href="{{ url_for('works', q=query, genre=genre, author=author, page=page-1) }}">← Previous</a>{% endif %}
+<span>{{ page }} / {{ total_pages }}</span>
+{% if page < total_pages %}<a href="{{ url_for('works', q=query, genre=genre, author=author, page=page+1) }}">Next →</a>{% endif %}
+</nav>
+</section>
+</div>{% endblock %}

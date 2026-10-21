@@ -1,0 +1,7 @@
+{% extends "base.html" %}{% block content %}
+<section class="hero compact"><div class="eyebrow">INDEX / BROWSE</div><h1>{{ title }}</h1><p>Explore the handmade bibliography by {{ kind }}.</p></section>
+<div class="facet-list">
+{% for name, count in groups %}
+<a href="{{ url_for('works', genre=name) if kind == 'genre' else url_for('works', author=name) }}"><span>{{ name }}</span><small>{{ count }} works ↗</small></a>
+{% else %}<p>No entries yet.</p>{% endfor %}
+</div>{% endblock %}
