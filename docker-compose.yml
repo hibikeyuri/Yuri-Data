@@ -1,40 +1,22 @@
-version: "1"
-
+# v2 opt-in deployment; original MySQL Compose preserved in Git history.
 services:
-  mysql:
-    build: ./db
-    container_name: yuridb
+  web:
+    build:
+      context: .
+      dockerfile: modern/Dockerfile
+    restart: unless-stopped
+    init: true
     ports:
-      - 3306:3306
-    networks:
-      - yuri000net1
-  
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    container_name: phpmyadmin
-    environment:
-      PMA_HOST: yuridb
-      PMA_USER: root
-      PMA_PASSWORD: myrootpass
-    ports:
-      - 8081:80
-    networks:
-      - yuri000net1
-    depends_on:
-      - mysql
-
-  backend:
-    build: .
-    container_name: yuriweb
-    ports:
-      - 5000:5000
-    networks:
-      - yuri000net1
-    depends_on:
-      - phpmyadmin
-
-networks:
-  yuri000net1:
-
-
-
+      - "127.0.0.1:8000:8000"
+    read_only: true
+    tmpfs:
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/healthz', timeout=3)"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
