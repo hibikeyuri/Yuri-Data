@@ -1,0 +1,37 @@
+# Side-by-side GCP candidate. Never replaces the original Compose stack or MySQL volume.
+# Environment variables are set by deploy/gcp.sh; never store their values here.
+services:
+  preview:
+    build:
+      context: ..
+      dockerfile: modern/Dockerfile
+    container_name: yuri-catalog-preview
+    restart: unless-stopped
+    init: true
+    environment:
+      YURI_CATALOG: /run/catalog/catalog.json
+    volumes:
+      - type: bind
+        source: ${YURI_CATALOG_FILE:?Specify private, sanitized catalog path}
+        target: /run/catalog/catalog.json
+        read_only: true
+    ports:
+      - "127.0.0.1:18000:8000"
+    networks:
+      - origin
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/healthz', timeout=3)"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+networks:
+  origin:
+    external: true
+    name: ${YURI_ORIGIN_NETWORK:?Specify the network shared by existing Nginx and Flask}
