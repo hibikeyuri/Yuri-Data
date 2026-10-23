@@ -1,0 +1,43 @@
+name: Candidate deployment checks
+
+on:
+  push:
+    branches: ['deploy/**']
+  pull_request:
+    paths:
+      - 'deploy/**'
+      - 'docs/DEPLOY_GCP.md'
+      - 'modern/**'
+      - 'tests/**'
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check scripts syntax
+        run: bash -n deploy/gcp.sh
+      - name: Validate compose without secrets
+        env:
+          YURI_CATALOG_FILE: /tmp/dummy-nonsecret-catalog.json
+          YURI_ORIGIN_NETWORK: placeholder-test-network
+        run: docker compose -f deploy/compose.gcp.yml config --quiet
+      - name: Run standalone unit tests
+        run: |
+          python -m pip install -r modern/requirements.txt
+          python -m unittest discover -s tests -v
+      - name: Container build smoke test
+        run: |
+          docker build -f modern/Dockerfile -t yuri-deploy-check .
+          docker run --rm --entrypoint python yuri-deploy-check -c 'from modern.catalog import load_catalog; assert len(load_catalog()) > 0'
+      - name: Confirm no candidate secrets added to tracked files
+        run: |
+          if git ls-files | grep -E '(^|/)(config\.py|yuri\.json|\.env|key\.pem|id_rsa)$'; then
+            echo "A private file was tracked; rejecting candidate." >&2
+            exit 1
+          fi
