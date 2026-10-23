@@ -40,3 +40,7 @@ For local Gunicorn, set YURI_CATALOG=modern/data/catalog.json. For Docker, mount
 - [Changes and pending work](docs/CHANGELOG.md)
 
 New UI supports home/work listing, search, genre/author indexes, detail pages and read-only JSON endpoints. Legacy publisher pages, numeric author/genre pages, richer relational fields and full record publication are not yet migrated. Original main remains unchanged. No GCP or DNS actions have been performed.
+
+## GCP candidate deployment (separate, opt-in)
+
+For a guarded, one-command preview on the existing Debian VM, see [GCP deployment and rollback](docs/DEPLOY_GCP.md). Use `bash deploy/gcp.sh preflight` first, then `bash deploy/gcp.sh preview` after provisioning a sanitized private catalogue outside this checkout. The current production Nginx and database are unchanged until an explicitly confirmed promotion.
