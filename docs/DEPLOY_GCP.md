@@ -38,6 +38,8 @@ python3 modern/tools/export_catalog.py /PRIVATE/PATH/yuri_raw_plus.json \
 chmod 600 "$HOME/yuri-private/catalog.json"
 ```
 
+Keep the private directory mode 0700 and its JSON mode 0600. The deployment script runs the isolated container with the non-root UID/GID of that one bound file, avoiding the need to make data world-readable. The file must not be owned by root.
+
 If the only complete records are in MySQL, **do not assume** the sample data is the complete site: export and sanitize your own authorized records first, without adding source credentials or the raw SQL dump to Git. The exporter intentionally strips all fields except ID (new row number), title, author, genres and status. Check the produced record count and ID differences before going live.
 
 You may set `YURI_CATALOG_FILE=/absolute/private/path/catalog.json` if your sanitized file has another location. It must be outside the public checkout.
