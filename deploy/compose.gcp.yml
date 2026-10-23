@@ -8,6 +8,8 @@ services:
     container_name: yuri-catalog-preview
     restart: unless-stopped
     init: true
+    # Match the private file's host owner so a 0600 bind mount stays readable.
+    user: "${YURI_HOST_UID:-10001}:${YURI_HOST_GID:-10001}"
     environment:
       YURI_CATALOG: /run/catalog/catalog.json
     volumes:
