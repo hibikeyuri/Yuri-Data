@@ -75,6 +75,11 @@ validate_catalog() {
     fail "Move the private catalog OUTSIDE the public repository checkout."
   [[ -r "$YURI_CATALOG_FILE" ]] || fail "Private catalog is not readable."
   export YURI_CATALOG_FILE
+  # The catalogue is mode 0600 on the host; run the container as its non-root owner.
+  YURI_HOST_UID="$(stat -c '%u' "$YURI_CATALOG_FILE")"
+  YURI_HOST_GID="$(stat -c '%g' "$YURI_CATALOG_FILE")"
+  [[ "$YURI_HOST_UID" != '0' ]] || fail "Private catalog must be owned by a non-root user."
+  export YURI_HOST_UID YURI_HOST_GID
   CATALOG_COUNT="$(PYTHONPATH="$ROOT" python3 - "$YURI_CATALOG_FILE" <<'PY'
 import sys
 from modern.catalog import load_catalog
